@@ -1,0 +1,73 @@
+﻿@model IEnumerable<WcfServiceDigitalBank.Models.Usuarios>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaNacimiento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sexo)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaNacimiento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sexo)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+<div class="pagination text-center" style="place-content: center;">
+    @if (Model.ToList().Count > 0)
+    {
+        <span>Página @(ViewBag.PaginaActual) de @ViewBag.TotalPaginas</span> 
+        
+        if (ViewBag.PaginaActual > 1)
+        {
+            <a href="@Url.Action("Index", new { pagina = ViewBag.PaginaActual })" style="margin-left: 2px;margin-right: 2px;"> Anterior  </a>
+        }
+        for (int i = 1; i <= ViewBag.TotalPaginas; i++)
+        {
+            if (i == ViewBag.PaginaActual)
+            {
+                <span style="margin-left: 2px;margin-right: 2px;"> @i </span>
+            }
+            else
+            {
+                <a href="@Url.Action("Index", new { pagina = i })" style="margin-left: 2px;margin-right: 2px;"> @i </a>
+            }
+        }
+        if (ViewBag.PaginaActual < ViewBag.TotalPaginas)
+        {
+            <a href="@Url.Action("Index", new { pagina = ViewBag.PaginaActual + 1 })" style="margin-left: 2px;margin-right: 2px;"> Siguiente </a>
+        }
+    }
+</div>
